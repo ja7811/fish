@@ -1,6 +1,7 @@
 package com.fisherman.fish.service;
 
 import com.fisherman.fish.dto.FileDTO;
+import com.fisherman.fish.dto.FileRequestDTO;
 import com.fisherman.fish.dto.GmoolDTO;
 import com.fisherman.fish.entity.FileEntity;
 import com.fisherman.fish.entity.GmoolEntity;
@@ -115,9 +116,10 @@ public class GmoolService {
         String filename = null, savePath = null; // exception 출력용
         try{
             for(FileDTO fd : fileDTOS){
-                filename = fd.getOriginalFileName();
-                MultipartFile file = fd.getFile();
-                savePath = FileUtil.getFinalPath(fd.getStoredFileName());
+                FileRequestDTO fr = (FileRequestDTO) fd;
+                filename = fr.getOriginalFileName();
+                MultipartFile file = fr.getFile();
+                savePath = FileUtil.getFinalPath(fr.getStoredFileName());
                 file.transferTo(new File(savePath));
                 System.out.println("'" + filename + "' saved in '" + savePath + "'");
             }

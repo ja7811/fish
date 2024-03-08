@@ -27,7 +27,7 @@ public class GmoolDTO {
     private int fileCount; // 첨부 파일 수
     private String userId; // 게시자 id
 
-    public GmoolDTO(GmoolReceiveDTO g){
+    public GmoolDTO(GmoolRequestDTO g){
         // GmoolReceiver로부터 dto 생성
         id = g.getId();
         gmoolName = g.getGmoolName();
@@ -50,15 +50,15 @@ public class GmoolDTO {
         gmoolDTO.setPinNumber(gmoolEntity.getPinNumber());
         List<FileEntity> fileEntityList = gmoolEntity.getFileEntityList();
         List<FileDTO> fileDTOList = new ArrayList<>();
-        for(FileEntity f : fileEntityList)fileDTOList.add(FileDTO.toFileDTO(f));
+        for(FileEntity f : fileEntityList) fileDTOList.add(FileResponseDTO.toFileDTO(f)); // FileDTO형으로 FileResponseDTO 저장
         gmoolDTO.setFileDTOList(fileDTOList);
         gmoolDTO.setFileCount(gmoolEntity.getFileCount());
         return gmoolDTO;
     }
 
-    public static GmoolDTO toGmoolDTO(GmoolReceiveDTO gmoolReceiveDTO) {
-        gmoolReceiveDTO.convertFilesToFileDTOList();
-        return gmoolReceiveDTO;
+    public static GmoolDTO toGmoolDTO(GmoolRequestDTO gmoolRequestDTO) {
+        gmoolRequestDTO.convertFilesToFileDTOList();
+        return gmoolRequestDTO;
     }
 
 }
